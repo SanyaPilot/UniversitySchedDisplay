@@ -39,7 +39,7 @@
     data() {
       return {
         selectedDay: curDate.getDay() - 1,
-        weekType: isWeekEven(groupData.studyStartTS * 1000, curDate.getTime()) == 0,
+        weekType: isWeekEven(groupData.studyStartTS * 1000, curDate.getTime()),
         weekItems: [
           { name: "Нечетная", value: false },
           { name: "Четная", value: true }
