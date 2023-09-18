@@ -3,5 +3,5 @@ export function timestampToString(ts) {
 }
 
 export function isWeekEven(startTS, curTS) {
-    return Math.ceil(Math.ceil(Math.floor((curTS - startTS) / 1000) / 3600 / 24) / 7) % 2 == 1
+    return Math.ceil(Math.ceil(Math.floor((curTS - startTS) / 1000) / 3600 / 24) / 7) % 2 == 0
 }
