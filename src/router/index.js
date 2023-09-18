@@ -4,7 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 const routes = [
   { path: '/', redirect: '/today' },
   { path: '/today', name: 'today', component: () => import('@/views/Today.vue') },
-  { path: '/all', name: 'all', component: () => import('@/views/Shedule.vue') },
+  { path: '/all', name: 'all', component: () => import('@/views/All.vue') },
 ]
 
 const router = createRouter({
