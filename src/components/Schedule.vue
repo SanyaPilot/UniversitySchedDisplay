@@ -2,31 +2,31 @@
   <VTable v-if="lessons != null" class="pt-1 px-2">
     <thead>
       <tr>
-        <th class="px-2">#</th>
-        <th class="px-2">Тип</th>
-        <th class="px-2">
+        <th class="px-1 text-center">#</th>
+        <th class="px-1 text-center">Тип</th>
+        <th class="px-1">
           <span>Пара</span><br>
           <span v-if="onMobile" class="text-caption">Преподаватель</span>
         </th>
-        <th v-if="!onMobile" class="px-2">Преподаватель</th>
-        <th class="px-2">Кабинет</th>
-        <th class="px-2">Время</th>
+        <th v-if="!onMobile" class="px-1 text-center">Преподаватель</th>
+        <th class="px-0 text-center">Каб.</th>
+        <th class="px-1 text-center">Время</th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="lesson in lessons">
-        <td class="px-2 py-2">{{ lesson.window ? "" : lesson.pos }}</td>
-        <td class="px-2 py-2">
+        <td class="px-1 py-2 text-center">{{ lesson.window ? "" : lesson.pos }}</td>
+        <td class="px-1 py-2 text-center">
           <VChip v-if="lesson.window == false" :color="lesson.practical ? 'blue' : 'green'">{{ lesson.practical ? "ПЗ" : "ЛК" }}</VChip>
-          <VChip v-else>Окно</VChip>
+          <VChip v-else>ОК</VChip>
         </td>
-        <td class="px-2 py-2">
+        <td class="px-1 py-2">
           <span>{{ lesson.window ? "" : lesson.name }}</span><br>
           <span v-if="onMobile" class="text-caption">{{ lesson.window ? "" : lesson.teacher}}</span>
         </td>
-        <td v-if="!onMobile" class="px-2 py-2">{{ lesson.window ? "" : lesson.teacher}}</td>
-        <td class="px-2 py-2">{{ lesson.window ? "" : lesson.room}}</td>
-        <td class="px-2 py-2">{{ lessonTimes[lesson.pos - 1] }}</td>
+        <td v-if="!onMobile" class="px-1 py-2 text-center">{{ lesson.window ? "" : lesson.teacher}}</td>
+        <td class="px-0 py-2 text-center">{{ lesson.window ? "" : lesson.room}}</td>
+        <td class="px-1 py-2 text-center">{{ lessonTimes[lesson.pos - 1] }}</td>
       </tr>
     </tbody>
   </VTable>
