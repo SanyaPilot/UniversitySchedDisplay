@@ -15,6 +15,7 @@
       temporary
     >
       <VList
+        color="primary"
         density="compact"
         nav
         mandatory
@@ -58,6 +59,7 @@
         drawer: {
           opened: false,
           selectedItem: null,
+          prevSelectedItem: null,
           items: [
             { text: "Сегодня", icon: 'mdi-calendar-today', view: 'today' },
             { text: "Все дни", icon: 'mdi-calendar-multiple', view: 'all' }
@@ -65,34 +67,33 @@
         },
         headers: {
           today: "Расписание на сегодня",
-          all: "Общее расписание"
+          all: "Расписание на все дни"
         }
       }
     },
     methods: {
       changeMainView(view) {
+        if (this.drawer.prevSelectedItem == view) return
+
         this.titleShown = false
         this.mainViewShown = false
 
         setTimeout(function() {
           this.mainViewShown = true
           this.$router.push(view)
+          this.drawer.prevSelectedItem = view
         }.bind(this), 400)
 
         setTimeout(function() {
           this.titleShown = true
-          this.title = this.drawer.items.find((item) => item.view == this.drawer.selectedItem[0]).text
+          this.title = this.drawer.items.find((item) => item.view == view).text
         }.bind(this), 400)
-      }
-    },
-    computed: {
-      routeName() {
-        return this.$route.name
       }
     },
     watch: {
       '$route.name'(value) {
         this.drawer.selectedItem = [value]
+        if (this.drawer.prevSelectedItem == null) this.drawer.prevSelectedItem = this.drawer.selectedItem
       }
     },
     mounted() {
