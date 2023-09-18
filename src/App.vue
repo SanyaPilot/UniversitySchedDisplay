@@ -6,7 +6,7 @@
       </template>
       
       <VScrollXReverseTransition>
-        <VAppBarTitle v-show="titleShown">{{ headers[$route.name] }}</VAppBarTitle>
+        <VAppBarTitle v-show="titleShown">{{ headers[$route.path] }}</VAppBarTitle>
       </VScrollXReverseTransition>
     </VAppBar>
 
@@ -24,15 +24,15 @@
         <VListItem
           v-for="(item, i) in drawer.items"
           :key="i"
-          @click.stop="changeMainView(item.view)"
+          @click.stop="changeMainView(item)"
           :prepend-icon="item.icon"
           :title="item.text"
-          :value="item.view"
+          :value="item.path"
         />
       </VList>
     </VNavigationDrawer>
 
-    <VMain class="px-4">
+    <VMain>
       <RouterView v-slot="{ Component }">
         <VScrollXReverseTransition>
           <VContainer fluid v-show="mainViewShown">
@@ -61,37 +61,39 @@
           selectedItem: null,
           prevSelectedItem: null,
           items: [
-            { text: "Сегодня", icon: 'mdi-calendar-today', view: 'today' },
-            { text: "Все дни", icon: 'mdi-calendar-multiple', view: 'all' }
+            { text: "Сегодня", icon: 'mdi-calendar-today', path: '/day/0', view: 'day', params: { offset: 0 } },
+            { text: "Завтра", icon: 'mdi-calendar-today', path: '/day/1', view: 'day', params: { offset: 1 } },
+            { text: "Все дни", icon: 'mdi-calendar-multiple', path: '/all', view: 'all' }
           ]
         },
         headers: {
-          today: "Расписание на сегодня",
-          all: "Расписание на все дни"
+          "/day/0": "Расписание на сегодня",
+          "/day/1": "Расписание на завтра",
+          "/all": "Расписание на все дни"
         }
       }
     },
     methods: {
-      changeMainView(view) {
-        if (this.drawer.prevSelectedItem == view) return
+      changeMainView(item) {
+        if (this.drawer.prevSelectedItem == item.path) return
 
         this.titleShown = false
         this.mainViewShown = false
 
         setTimeout(function() {
           this.mainViewShown = true
-          this.$router.push(view)
-          this.drawer.prevSelectedItem = view
+          this.$router.push({ name: item.view, params: item.params})
+          this.drawer.prevSelectedItem = item.id
         }.bind(this), 400)
 
         setTimeout(function() {
           this.titleShown = true
-          this.title = this.drawer.items.find((item) => item.view == view).text
+          this.title = this.drawer.items.find((item) => item.view == item.view).text
         }.bind(this), 400)
       }
     },
     watch: {
-      '$route.name'(value) {
+      '$route.path'(value) {
         this.drawer.selectedItem = [value]
         if (this.drawer.prevSelectedItem == null) this.drawer.prevSelectedItem = this.drawer.selectedItem
       }

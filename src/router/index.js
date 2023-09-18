@@ -2,8 +2,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
-  { path: '/', redirect: '/today' },
-  { path: '/today', name: 'today', component: () => import('@/views/Today.vue') },
+  { path: '/', redirect: '/day/0' },
+  { path: '/day/:offset', name: 'day', component: () => import('@/views/Day.vue') },
   { path: '/all', name: 'all', component: () => import('@/views/All.vue') },
 ]
 
