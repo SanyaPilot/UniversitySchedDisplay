@@ -1,69 +1,19 @@
-# base
+# UniversitySchedDisplay
+Простой сайт на Vue.js 3 + Vuetify для удобного показа расписания  
 
-## Project setup
+## Возможности
+- Автоматический показ расписания на сегодня
+- Учет четной / нечетной недели
+- Просмотр расписания на всю неделю
 
-```
-# yarn
-yarn
+## Деплой
+1. Склонировать репозиторий  
+   `git clone https://github.com/SanyaPilot/UniversitySchedDisplay`
 
-# npm
-npm install
+2. Установить зависимости  
+   `npm install`
 
-# pnpm
-pnpm install
-
-# pnpm
-bun install
-```
-
-### Compiles and hot-reloads for development
-
-```
-# yarn
-yarn dev
-
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# bun
-bun run dev
-```
-
-### Compiles and minifies for production
-
-```
-# yarn
-yarn build
-
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# bun
-bun run build
-```
-
-### Lints and fixes files
-
-```
-# yarn
-yarn lint
-
-# npm
-npm run lint
-
-# pnpm
-pnpm lint
-
-# bun
-bun run lint
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://vitejs.dev/config/).
+3. Для разработки:  
+   `npm run dev`  (Запустит дев сервер)  
+   Production-билд:  
+   `npm run build`
