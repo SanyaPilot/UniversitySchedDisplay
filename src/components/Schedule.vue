@@ -80,7 +80,7 @@
         if (group == undefined) return null
         const dow = this.dow != undefined ? this.dow : (curDate.getDay() - 1)
         const day = group.weeks[this.weekType ? 'even' : 'odd'][dow]
-        if (day == undefined) return null
+        if (day == undefined || day == null) return null
 
         // Deep copy
         let temp = JSON.parse(JSON.stringify(day))
