@@ -75,9 +75,10 @@
         return times
       },
       lessons() {
-        let dow = this.dow == undefined ? (curDate.getDay() - 1) : this.dow
-        const group = schedConfig.groups[this.selectedGroup]
+        const groupId = this.selectedGroup != undefined ? this.selectedGroup : 0
+        const group = schedConfig.groups[groupId]
         if (group == undefined) return null
+        const dow = this.dow != undefined ? this.dow : (curDate.getDay() - 1)
         const day = group.weeks[this.weekType ? 'even' : 'odd'][dow]
         if (day == undefined) return null
 
