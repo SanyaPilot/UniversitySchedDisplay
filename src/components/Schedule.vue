@@ -1,5 +1,5 @@
 <template>
-  <VTable v-if="lessons != null" class="pt-1 px-2">
+  <VTable v-if="lessons != null" class="pt-1 px-2 text-body-1">
     <thead>
       <tr>
         <th class="px-1 text-center">#</th>
