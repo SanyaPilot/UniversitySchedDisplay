@@ -1,5 +1,5 @@
 <template>
-  <VApp>
+  <VApp :theme="currentTheme">
     <VAppBar color="primary">
       <template v-slot:prepend>
         <VAppBarNavIcon @click.stop="drawer.opened = !drawer.opened"></VAppBarNavIcon>
@@ -53,6 +53,7 @@
         title: null,
         titleShown: false,
         mainViewShown: false,
+        currentTheme: "light",
         drawer: {
           opened: false,
           selectedItem: null,
@@ -96,6 +97,13 @@
         this.drawer.selectedItem = [value]
         if (this.drawer.prevSelectedItem == null) this.drawer.prevSelectedItem = this.drawer.selectedItem
       }
+    },
+    created() {
+      // Automatical dark theme
+      this.currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : "light"
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        this.currentTheme = e.matches ? "dark" : "light";
+      });
     },
     mounted() {
       this.titleShown = true
