@@ -34,7 +34,7 @@
 </template>
 
 <script>
-  import groupData from "@/config.json"
+  import schedConfig from "@/sched_config.json"
   import { timestampToString, isWeekEven } from '@/utils/date.js'
 
   const curDate = new Date()
@@ -50,20 +50,25 @@
         required: true
       }
     },
+    data() {
+      return {
+        selectedGroup: window.localStorage.getItem('selectedGroup')
+      }
+    },
     computed: {
       lessonTimes() {
         let times = []
-        let curTime = groupData.startTime
-        for (const brTime of groupData.breaks) {
+        let curTime = schedConfig.startTime
+        for (const brTime of schedConfig.breaks) {
           let startTime = timestampToString(curTime)
-          curTime += groupData.lessonLength
+          curTime += schedConfig.lessonLength
           let stopTime = timestampToString(curTime)
           times.push(startTime + " - " + stopTime)
           curTime += brTime
         }
         // And for the last lesson
         let startTime = timestampToString(curTime)
-        curTime += groupData.lessonLength
+        curTime += schedConfig.lessonLength
         let stopTime = timestampToString(curTime)
         times.push(startTime + " - " + stopTime)
 
@@ -71,7 +76,9 @@
       },
       lessons() {
         let dow = this.dow == undefined ? (curDate.getDay() - 1) : this.dow
-        const day = groupData.weeks[this.weekType ? 'even' : 'odd'][dow]
+        const group = schedConfig.groups[this.selectedGroup]
+        if (group == undefined) return null
+        const day = group.weeks[this.weekType ? 'even' : 'odd'][dow]
         if (day == undefined) return null
 
         // Deep copy
@@ -98,6 +105,10 @@
       onMobile() {
         return this.$vuetify.display.xs
       }
-    }
+    },
+    activated() {
+      // Fetch currently selected group again (to display right schedule if it was changed)
+      this.selectedGroup = window.localStorage.getItem('selectedGroup')
+    },
   }
 </script>

@@ -5,6 +5,7 @@ const routes = [
   { path: '/', redirect: '/day/0' },
   { path: '/day/:offset', name: 'day', component: () => import('@/views/Day.vue') },
   { path: '/all', name: 'all', component: () => import('@/views/All.vue') },
+  { path: '/settings', name: 'settings', component: () => import('@/views/Settings.vue') },
 ]
 
 const router = createRouter({

@@ -28,7 +28,7 @@
 </template>
 
 <script>
-  import groupData from "@/config.json"
+  import schedConfig from "@/sched_config.json"
   import ScheduleView from '@/components/Schedule.vue'
   import { isWeekEven } from '@/utils/date.js'
 
@@ -39,7 +39,7 @@
     data() {
       return {
         selectedDay: curDate.getDay() - 1,
-        weekType: isWeekEven(groupData.studyStartTS * 1000, curDate.getTime()),
+        weekType: isWeekEven(schedConfig.studyStartTS * 1000, curDate.getTime()),
         weekItems: [
           { name: "Нечетная", value: false },
           { name: "Четная", value: true }

@@ -47,12 +47,9 @@
 </template>
 
 <script>
-  import groupData from "@/config.json"
-
   export default {
     data() {
       return {
-        groupName: groupData.groupName,
         title: null,
         titleShown: false,
         mainViewShown: false,
@@ -63,13 +60,15 @@
           items: [
             { text: "Сегодня", icon: 'mdi-calendar-today', path: '/day/0', view: 'day', params: { offset: 0 } },
             { text: "Завтра", icon: 'mdi-calendar-today', path: '/day/1', view: 'day', params: { offset: 1 } },
-            { text: "Все дни", icon: 'mdi-calendar-multiple', path: '/all', view: 'all' }
+            { text: "Все дни", icon: 'mdi-calendar-multiple', path: '/all', view: 'all' },
+            { text: "Настройки", icon: 'mdi-cog', path: '/settings', view: 'settings' }
           ]
         },
         headers: {
           "/day/0": "Расписание на сегодня",
           "/day/1": "Расписание на завтра",
-          "/all": "Расписание на все дни"
+          "/all": "Расписание на все дни",
+          "/settings": "Настройки"
         }
       }
     },

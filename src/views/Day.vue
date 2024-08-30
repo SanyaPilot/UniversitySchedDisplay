@@ -9,7 +9,7 @@
 </template>
 
 <script>
-  import groupData from "@/config.json"
+  import schedConfig from "@/sched_config.json"
   import { isWeekEven } from '@/utils/date.js'
   import ScheduleView from '@/components/Schedule.vue'
 
@@ -30,7 +30,7 @@
         return dayNames[this.curDay]
       },
       isWeekEven() {
-        return isWeekEven(groupData.studyStartTS * 1000, this.curTS)
+        return isWeekEven(schedConfig.studyStartTS * 1000, this.curTS)
       },
     },
     methods: {
