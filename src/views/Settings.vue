@@ -13,7 +13,26 @@
                 item-title="name"
                 item-value="value"
                 return-object
-                @update:modelValue="saveGroup"
+                @update:modelValue="updateSettings"
+                :menu-props="{ offsetX: true }"
+                hide-details
+                variant="outlined"
+              ></v-select>
+            </v-list-item-action>
+          </template>
+        </v-list-item>
+        <v-list-item lines="two">
+          <v-list-item-title>Группа ДРПК</v-list-item-title>
+          <v-list-item-subtitle>Тут можно выбрать свою группу ДРПК</v-list-item-subtitle>
+          <template v-slot:append="">
+            <v-list-item-action class="ml-0">
+              <v-select
+                v-model="selectedAdditionalGroup"
+                :items="additionalGroupItems"
+                item-title="name"
+                item-value="value"
+                return-object
+                @update:modelValue="updateSettings"
                 :menu-props="{ offsetX: true }"
                 hide-details
                 variant="outlined"
@@ -25,14 +44,15 @@
     </v-card>
   </div>
 </template>
-  
+
 <script>
   import schedConfig from "@/sched_config.json"
 
   export default {
     data() {
       return {
-        selectedGroup: null
+        selectedGroup: null,
+        selectedAdditionalGroup: null
       }
     },
     computed: {
@@ -42,12 +62,19 @@
           temp.push({name: schedConfig.groups[i].name, value: i})
         }
         return temp
+      },
+      additionalGroupItems() {
+        let temp = []
+        for (let i = 0; i < schedConfig.additionalGroups.length; i++) {
+          temp.push({name: schedConfig.additionalGroups[i].name, value: i})
+        }
+        return temp
       }
     },
     methods: {
-      saveGroup() {
-        console.log(this.selectedGroup.value)
+      updateSettings() {
         window.localStorage.setItem('selectedGroup', this.selectedGroup.value)
+        window.localStorage.setItem('selectedAdditionalGroup', this.selectedAdditionalGroup.value)
       }
     },
     created() {
@@ -56,6 +83,12 @@
         groupId = 0
       }
       this.selectedGroup = this.groupItems[groupId]
+
+      let addGroupId = window.localStorage.getItem('selectedAdditionalGroup')
+      if (addGroupId == null) {
+        addGroupId = 0
+      }
+      this.selectedAdditionalGroup = this.additionalGroupItems[addGroupId]
     }
   }
 </script>

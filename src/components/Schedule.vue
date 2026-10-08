@@ -1,5 +1,5 @@
 <template>
-  <VTable v-if="lessons != null" class="pt-1 px-2 text-body-1">
+  <VTable v-if="lessons.length > 0" class="pt-1 px-2 text-body-1">
     <thead>
       <tr>
         <th class="px-1 text-center">#</th>
@@ -52,7 +52,8 @@
     },
     data() {
       return {
-        selectedGroup: window.localStorage.getItem('selectedGroup')
+        selectedGroup: window.localStorage.getItem('selectedGroup'),
+        selectedAdditionalGroup: window.localStorage.getItem('selectedAdditionalGroup')
       }
     },
     computed: {
@@ -76,18 +77,31 @@
       },
       lessons() {
         const groupId = this.selectedGroup != undefined ? this.selectedGroup : 0
+        const addGroupId = this.selectedAdditionalGroup != undefined ? this.selectedAdditionalGroup : 0
         const group = schedConfig.groups[groupId]
-        if (group == undefined) return null
+        const addGroup = schedConfig.additionalGroups[addGroupId]
+        if (group == undefined || addGroup == undefined) return []
         const dow = this.dow != undefined ? this.dow : (curDate.getDay() - 1)
-        const day = group.weeks[this.weekType ? 'even' : 'odd'][dow]
-        if (day == undefined || day == null) return null
+
+        let day = group.weeks[this.weekType ? 'even' : 'odd'][dow]
+        let addDay = addGroup.weeks[this.weekType ? 'even' : 'odd'][dow]
+        if (day === undefined || addDay === undefined) return []
+
+        day = day != null ? day : []
+        addDay = addDay != null ? addDay : []
+        const lessonCount = Math.max(day.length, addDay.length)
+        const mergedDay = []
+        for (let i = 0; i < lessonCount; i++) {
+          mergedDay.push(day[i] != null ? day[i] :
+                         addDay[i] != null ? addDay[i] : null)
+        }
 
         // Deep copy
-        let temp = JSON.parse(JSON.stringify(day))
+        let temp = JSON.parse(JSON.stringify(mergedDay))
 
         let pos = 1
         // Remove prepending nulls
-        while (temp[0] == null) {
+        while (temp[0] === null) {
           temp.shift()
           pos++
         }
